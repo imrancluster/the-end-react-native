@@ -10,13 +10,17 @@ import {
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import { HelloTest } from '../helper/Helper';
+
 export default class Login extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            name: '',
             email: '',
             password: '',
+            password_confirmation: '',
         }
     }
 
@@ -38,7 +42,14 @@ export default class Login extends React.Component {
 
                 <View style={styles.container}>
 
-                    <Text style={styles.header}>- LOGIN -</Text>
+                    <Text style={styles.header}>- Registration -</Text>
+
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder='Name'
+                        onChangeText={ (name) => this.setState({name}) }
+                        underlineColorAndroit='transparent'
+                    />
 
                     <TextInput
                         style={styles.textInput}
@@ -55,15 +66,18 @@ export default class Login extends React.Component {
                         secureTextEntry={true}
                     />
 
-                    <TouchableOpacity
-                        style={styles.btnLog}
-                        onPress={this.login}>
-                        <Text style={styles.whiteColor}>Log in</Text>
-                    </TouchableOpacity>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder='Password Confirmation'
+                        onChangeText={ (password_confirmation) => this.setState({password_confirmation}) }
+                        underlineColorAndroit='transparent'
+                        secureTextEntry={true}
+                    />
 
                     <TouchableOpacity
+                        style={styles.btnReg}
                         onPress={this.registration}>
-                        <Text style={styles.btnReg}>Sign Up?</Text>
+                        <Text>Submit</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -72,23 +86,12 @@ export default class Login extends React.Component {
         );
     }
 
-    // Login Submit Function
-    login = () => {
-
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-
-        if(reg.test(this.state.email) === false)
-        {
-            console.log("Email is Not Correct");
-            alert("Invalid email");
-        } else {
-            alert("Valid email");
-        }
-
-    }
-
     registration = () => {
-        this.props.navigation.navigate("Registration");
+        if (HelloTest(this.state.email) !== false) {
+            alert('Valid Email');
+        } else {
+            alert('Invalid Email');
+        }
     }
 }
 
@@ -119,18 +122,15 @@ const styles = StyleSheet.create({
     },
     btnLog: {
         alignSelf: 'stretch',
-        backgroundColor: '#0c3637',
+        backgroundColor: 'skyblue',
         padding: 20,
         alignItems: 'center',
     },
     btnReg: {
         alignSelf: 'stretch',
-        color: '#fff',
+        backgroundColor: 'skyblue',
         padding: 20,
         alignItems: 'center',
-    },
-    whiteColor: {
-      color: '#fff',
     }
 
 });
